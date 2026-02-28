@@ -3,9 +3,13 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Download } from "lucide-react"
 
-export function MobileMenu() {
+interface MobileMenuProps {
+  onExportPDF?: () => void
+}
+
+export function MobileMenu({ onExportPDF }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuItems = [
@@ -22,6 +26,11 @@ export function MobileMenu() {
     setIsOpen(false)
   }
 
+  const handleExport = () => {
+    onExportPDF?.()
+    setIsOpen(false)
+  }
+
   return (
     <div className="md:hidden">
       <Button
@@ -30,7 +39,7 @@ export function MobileMenu() {
         onClick={toggleMenu}
         aria-label="Toggle mobile menu"
       >
-        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {isOpen ? <X className="h-5 w-5 z-50" /> : <Menu className="h-5 w-5" />}
       </Button>
 
       <AnimatePresence>
@@ -51,7 +60,7 @@ export function MobileMenu() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-16 right-0 z-50 h-[calc(100vh-4rem)] w-64 border-l bg-background p-6 shadow-lg"
+              className="fixed top-14 right-0 z-50 h-[calc(100vh-3.5rem)] w-64 border-l bg-background p-6 shadow-lg"
             >
               <nav className="space-y-4">
                 {menuItems.map((item, index) => (
@@ -67,6 +76,19 @@ export function MobileMenu() {
                     {item.label}
                   </motion.a>
                 ))}
+                {onExportPDF && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: menuItems.length * 0.1 }}
+                    className="pt-4 mt-4 border-t"
+                  >
+                    <Button onClick={handleExport} variant="default" className="w-full" size="lg">
+                      <Download className="h-4 w-4 mr-2" />
+                      Export PDF
+                    </Button>
+                  </motion.div>
+                )}
               </nav>
             </motion.div>
           </>

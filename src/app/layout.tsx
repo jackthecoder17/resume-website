@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Interactive Resume - Your Name",
-  description: "A modern, interactive resume website with animations and PDF export",
+  title: "John Doe | Senior Full Stack Developer",
+  description: "Portfolio and resume of John Doe, a Senior Full Stack Developer specializing in React, Node.js, and cloud technologies.",
+  keywords: ["Full Stack Developer", "React", "Node.js", "Portfolio", "Resume", "Web Development"],
+  authors: [{ name: "John Doe" }],
+  creator: "John Doe",
 };
 
 export default function RootLayout({
